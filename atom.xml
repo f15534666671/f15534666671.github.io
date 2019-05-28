@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://f15534666671.github.io</id>
     <title>Gridea</title>
-    <updated>2019-05-28T04:01:47.186Z</updated>
+    <updated>2019-05-28T04:49:41.587Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://f15534666671.github.io"/>
     <link rel="self" href="https://f15534666671.github.io/atom.xml"/>
@@ -10,6 +10,54 @@
     <logo>https://f15534666671.github.io/images/avatar.png</logo>
     <icon>https://f15534666671.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[latex入门(1)——vim下环境配置]]></title>
+        <id>https://f15534666671.github.io/post/latex-ru-men-1-vim-xia-huan-jing-pei-zhi</id>
+        <link href="https://f15534666671.github.io/post/latex-ru-men-1-vim-xia-huan-jing-pei-zhi">
+        </link>
+        <updated>2019-05-28T04:14:10.000Z</updated>
+        <content type="html"><![CDATA[<p>目标：使用Latex编辑Latex文档，并可以实时预览，主要是被震撼<a href="https://www.jiqizhixin.com/articles/19040101">(刺激)</a>到了.</p>
+<h3 id="配置步骤">配置步骤</h3>
+<ol>
+<li><a href="https://github.com/lervag/vimtex">vimtex</a>安装</li>
+<li>texlive安装
+<code>bash 	sudo apt-get install texlive-full</code>
+这里不一定要安装<code>full</code>版本，但是中文排版需要专门的宏包，<code>full</code>版本可以省去很多麻烦</li>
+<li><a href="https://github.com/xuhdev/vim-latex-live-preview">vim-latex-live-preview</a>插件安装</li>
+<li>zathura安装
+zathura是一个pdf预览软件，支持latex编辑的自动刷新，可以使用vim-latex-live-preview支持的<a href="https://github.com/xuhdev/vim-latex-live-preview/wiki/Known-Working-PDF-Viewers">其他软件</a>，在<code>vimrc</code>文件中指名即可</li>
+</ol>
+<h3 id="vimrc文件中最终相关配置"><code>.vimrc</code>文件中最终相关配置</h3>
+<pre><code class="language-bash">&quot; Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+&quot; Declare the list of plugins.
+Plug 'lervag/vimtex'
+let g:tex_flavor = 'latex'
+let g:vimtex_version_check = 0
+let g:vimtex_view_method='zathura'
+
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+let g:livepreview_previewer = 'zathura'
+&quot; 注意这里指名编译使用xelatex，否则默认使用pdflatex会报错
+let g:livepreview_engine = 'xelatex'
+&quot;let g:livepreview_cursorhold_recompile = 0
+
+&quot; List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+
+filetype plugin indent on
+syntax on
+</code></pre>
+<h3 id="测试安装">测试安装</h3>
+<p>新建一个<strong>空目录</strong>，使用vim编辑一个简单的<code>tex</code>文件(保证语法正确)，使用<code>:LLPStartPreview</code>命令进行编译，正常情况下可以弹出pdf预览界面，表示安装成功。</p>
+<p>==注意：==一定是一个空目录，否则会报<code>Failed to compile bibliography</code> 或 <code>Failed to compile</code>的错。参见：https://github.com/xuhdev/vim-latex-live-preview/issues/21#issuecomment-322240236</p>
+<h5 id="今日大事件">今日大事件</h5>
+<p><em>好奇心日报再次停更</em>
+<img src="https://f15534666671.github.io/post-images/1559018965641.jpg" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://f15534666671.github.io/post/hello-gridea</id>

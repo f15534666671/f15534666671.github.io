@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Hello Gridea | Gridea</title>
+<title>latex入门(1)——vim下环境配置 | Gridea</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -98,45 +98,77 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Hello Gridea</h2>
-            <div class="post-date">2018-12-12</div>
+            <h2 class="post-title">latex入门(1)——vim下环境配置</h2>
+            <div class="post-date">2019-05-28</div>
             
-              <div class="feature-container" style="background-image: url('https://f15534666671.github.io/post-images/hello-gridea.png')">
+              <div class="feature-container" style="background-image: url('https://f15534666671.github.io/post-images/latex-ru-men-1-vim-xia-huan-jing-pei-zhi.jpg')">
               </div>
             
             <div class="post-content">
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+              <p>目标：使用Latex编辑Latex文档，并可以实时预览，主要是被震撼<a href="https://www.jiqizhixin.com/articles/19040101">(刺激)</a>到了.</p>
+<h3 id="配置步骤">配置步骤</h3>
+<ol>
+<li><a href="https://github.com/lervag/vimtex">vimtex</a>安装</li>
+<li>texlive安装
+<code>bash 	sudo apt-get install texlive-full</code>
+这里不一定要安装<code>full</code>版本，但是中文排版需要专门的宏包，<code>full</code>版本可以省去很多麻烦</li>
+<li><a href="https://github.com/xuhdev/vim-latex-live-preview">vim-latex-live-preview</a>插件安装</li>
+<li>zathura安装
+zathura是一个pdf预览软件，支持latex编辑的自动刷新，可以使用vim-latex-live-preview支持的<a href="https://github.com/xuhdev/vim-latex-live-preview/wiki/Known-Working-PDF-Viewers">其他软件</a>，在<code>vimrc</code>文件中指名即可</li>
+</ol>
+<h3 id="vimrc文件中最终相关配置"><code>.vimrc</code>文件中最终相关配置</h3>
+<pre><code class="language-bash">&quot; Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+&quot; Declare the list of plugins.
+Plug 'lervag/vimtex'
+let g:tex_flavor = 'latex'
+let g:vimtex_version_check = 0
+let g:vimtex_view_method='zathura'
+
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+let g:livepreview_previewer = 'zathura'
+&quot; 注意这里指名编译使用xelatex，否则默认使用pdflatex会报错
+let g:livepreview_engine = 'xelatex'
+&quot;let g:livepreview_cursorhold_recompile = 0
+
+&quot; List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+
+filetype plugin indent on
+syntax on
+</code></pre>
+<h3 id="测试安装">测试安装</h3>
+<p>新建一个<strong>空目录</strong>，使用vim编辑一个简单的<code>tex</code>文件(保证语法正确)，使用<code>:LLPStartPreview</code>命令进行编译，正常情况下可以弹出pdf预览界面，表示安装成功。</p>
+<p>==注意：==一定是一个空目录，否则会报<code>Failed to compile bibliography</code> 或 <code>Failed to compile</code>的错。参见：https://github.com/xuhdev/vim-latex-live-preview/issues/21#issuecomment-322240236</p>
+<h5 id="今日大事件">今日大事件</h5>
+<p><em>好奇心日报再次停更</em>
+<img src="https://f15534666671.github.io/post-images/1559018965641.jpg" alt=""></p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://f15534666671.github.io/tag/gridea" class="tag">
-                    Gridea
+                  <a href="https://f15534666671.github.io/tag/8JyE2VJNs" class="tag">
+                    vim
+                  </a>
+                
+                  <a href="https://f15534666671.github.io/tag/ZUJfaPq6x" class="tag">
+                    latex
                   </a>
                 
               </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://f15534666671.github.io/post/hello-gridea">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
             
 
             
